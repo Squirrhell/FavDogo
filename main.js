@@ -1,7 +1,7 @@
 
-function Chien(message, status){
-    this.message = message;
-    this.status = status;
+function Chien(url, isSaved){
+    this.url = url;
+    this.isSaved = isSaved;
 }
 
 
@@ -16,25 +16,53 @@ function affichageChienRandom() {
             }
         })
         .then(data => {
-            let chiensRandom = new Chien(data.message, data.status);
+            let chiensRandom = new Chien(data.message, 0);
             return chiensRandom;
         })
         .then(chiensRandom => {
-            let original = document.getElementById('divMain');
-            original.innerHTML = "";
+            let mainDiv = document.getElementById('divMain');
+            mainDiv.innerHTML = "";
 
             for(ii = 0 ; ii < 3 ; ii++){
-                let secondDiv = document.createElement('div');
-                secondDiv.width = "30%";
-                
-                original.appendChild(secondDiv);
-        
-                let newImg = document.createElement('img');
-                newImg.src = chiensRandom.message[ii];
-                newImg.alt = "chienRandom"+ii;
+                affichageDogo(chiensRandom.url[ii]);
+                mainDiv.appendChild(addButton(0, chiensRandom.url[ii]));
             
-                secondDiv.appendChild(newImg);
             }
         })
         .catch(error => console.log(error));
 }
+
+function affichageDogo(url){
+    let mainDiv = document.getElementById('divMain');
+    let dogoDiv = document.createElement('div');
+    
+    mainDiv.appendChild(dogoDiv);
+
+    let newImg = document.createElement('img');
+    newImg.src = url;
+
+    dogoDiv.appendChild(newImg);
+}
+
+function addButton(status,url){
+    let button = document.createElement('button');
+    switch(status){
+        case 0:
+        button.innerHTML = "add";
+        button.setAttribute("onclick", "createDogo('"+url+"')");
+        break;
+
+        case 1:
+        button.innerHTML = "delete";
+        button.setAttribute("onclick", "updateDogo('"+url+"')");
+        break;   
+
+        case 2:
+        button.innerHTML = "restore";
+        button.setAttribute("onclick", "updateDogo('"+url+"')");
+        break;
+
+    }
+    return button;
+}
+

@@ -3,13 +3,9 @@ function home(view){
     let div = document.createElement('div');
     div.id = "divMain";
 
-    console.log(div);
-
     let button = document.createElement('button');
     button.innerHTML = "Roll";
     button.setAttribute("onclick", "affichageChienRandom()");
-
-    console.log(button);
     
     view.appendChild(div);
     view.appendChild(button);
@@ -18,8 +14,24 @@ function home(view){
 }
 
 function favorite(view){
+    let div = document.createElement('div');
+    div.id = "divMain";
     
+    view.appendChild(div);
+
+    readDogo(1);
 };
+
+function favorite(view){
+    let div = document.createElement('div');
+    div.id = "divMain";
+    
+    view.appendChild(div);
+
+    readDogo(2);
+};
+
+
 
 function hashChangedRoute() {
     const hash = window.location.hash;  
@@ -34,6 +46,10 @@ function hashChangedRoute() {
 
         case "#favorite":
             favorite(view);
+        break;
+
+        case "#deleted":
+            deleteDogo(view);
         break;
 
         default:
