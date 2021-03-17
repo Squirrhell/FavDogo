@@ -61,7 +61,7 @@ function hashChangedRoute() {
 window.addEventListener("hashchange", hashChangedRoute);
 window.onload = event => {
     let hash = window.location.hash;
-    if(hash != "#home" && hash != "#favorite"){
+    if(hash != "#home" && hash != "#favorite" && hash != "#deleted"){
         history.pushState(null, null, "#home");
     }
     hashChangedRoute();

@@ -39,7 +39,7 @@ function readDogo(status){
     index.openCursor(isSavedKeyRange).onsuccess = event => {
         let cursor = event.target.result;
         if (cursor) {
-            console.log(cursor.value.url);
+            //console.log(cursor.value.url);
             affichageDogo(cursor.value.url);
             document.getElementById('divMain').appendChild(addButton(status, cursor.value.url));
             cursor.continue();
