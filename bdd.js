@@ -1,8 +1,8 @@
 
 var db;
-const request = indexedDB.open("MyTestDatabase", 3);
+const request = indexedDB.open("DogoDB", 3);
 request.onerror = event => {console.log('Erreur au chargement de la BDD')};
-
+request.onsuccess = event => {db = event.target.result;console.log('Succes du chargement de la BDD')};
 request.onupgradeneeded = event => {
     db = event.target.result;
 
@@ -25,22 +25,26 @@ function createDogo(url){
 
     let request = objectStore.add(chienAddFav);
 
+    request.onsuccess = event => {console.log('Chien ajouté aux favoris');};
     request.onerror = event => {console.log('Erreur lors d\'une requete CREATE');};
 }
 
 function readDogo(status){
+    let isSavedKeyRange = IDBKeyRange.only(status);
+    
     let transaction = db.transaction(["dogo"]);
     let objectStore = transaction.objectStore("dogo");
     let index = objectStore.index("isSaved");
    
-    let isSavedKeyRange = IDBKeyRange.only(status);
     index.openCursor(isSavedKeyRange).onsuccess = event => {
         let cursor = event.target.result;
         if (cursor) {
-            affichageFavDogo(cursor.value.url);
+            console.log(cursor.value.url);
+            affichageDogo(cursor.value.url);
             document.getElementById('divMain').appendChild(addButton(status));
             cursor.continue();
         }
+        console.log('Chien favoris affichés');
     };
 
     index.onerror = event => {console.log('Erreur lors d\'une requete READ');};

@@ -22,7 +22,7 @@ function favorite(view){
     readDogo(1);
 };
 
-function favorite(view){
+function deleted(view){
     let div = document.createElement('div');
     div.id = "divMain";
     
