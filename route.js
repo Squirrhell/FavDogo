@@ -49,7 +49,7 @@ function hashChangedRoute() {
         break;
 
         case "#deleted":
-            deleteDogo(view);
+            deleted(view);
         break;
 
         default:

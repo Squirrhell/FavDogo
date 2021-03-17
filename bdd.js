@@ -31,20 +31,22 @@ function createDogo(url){
 
 function readDogo(status){
     let isSavedKeyRange = IDBKeyRange.only(status);
-    
+    console.log(isSavedKeyRange);
+
     let transaction = db.transaction(["dogo"]);
     let objectStore = transaction.objectStore("dogo");
     let index = objectStore.index("isSaved");
    
     index.openCursor(isSavedKeyRange).onsuccess = event => {
+        console.log(event);
         let cursor = event.target.result;
         if (cursor) {
             console.log(cursor.value.url);
             affichageDogo(cursor.value.url);
-            document.getElementById('divMain').appendChild(addButton(status));
+            document.getElementById('divMain').appendChild(addButton(status, cursor.value.url));
             cursor.continue();
         }
-        console.log('Chien favoris affichés');
+        console.log('Chien affichés');
     };
 
     index.onerror = event => {console.log('Erreur lors d\'une requete READ');};
@@ -64,28 +66,25 @@ function deleteDogo(){
     */
 }
 
-function updateDogo(){
-    /* COPY DOC
-    var objectStore = db.transaction(["customers"], "readwrite").objectStore("customers");
-    var request = objectStore.get("444-44-4444");
-    request.onerror = function(event) {
-    // Gestion des erreurs!
-    };
-    request.onsuccess = function(event) {
+function updateDogo(url, value){
+    let transaction = db.transaction(["dogo"], "readwrite")
+    let objectStore = transaction.objectStore("dogo");
+    console.log(url);
+    let request = objectStore.get(url);
+
+    request.onerror = event => {console.log('Erreur lors d\'une requete update');};
+    request.onsuccess = event => {
         // On récupère l'ancienne valeur que nous souhaitons mettre à jour
+        console.log(request);
         var data = request.result;
 
         // On met à jour ce(s) valeur(s) dans l'objet
-        data.age = 42;
+        console.log(data);
+        data.isSaved = value;
 
         // Et on remet cet objet à jour dans la base
         var requestUpdate = objectStore.put(data);
-        requestUpdate.onerror = function(event) {
-            // Faire quelque chose avec l’erreur
-        };
-        requestUpdate.onsuccess = function(event) {
-            // Succès - la donnée est mise à jour !
-        };
+        requestUpdate.onerror = event => {console.log('Erreur lors de la màj de la ligne');};
+        requestUpdate.onsuccess = event => {console.log('Ligne màj');};
     };
-    */
 }

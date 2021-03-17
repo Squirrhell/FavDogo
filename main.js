@@ -54,12 +54,12 @@ function addButton(status,url){
 
         case 1:
         button.innerHTML = "delete";
-        button.setAttribute("onclick", "updateDogo('"+url+"')");
+        button.setAttribute("onclick", "updateDogo('"+url+"',2)");
         break;   
 
         case 2:
         button.innerHTML = "restore";
-        button.setAttribute("onclick", "updateDogo('"+url+"')");
+        button.setAttribute("onclick", "updateDogo('"+url+"',1)");
         break;
 
     }
