@@ -31,14 +31,12 @@ function createDogo(url){
 
 function readDogo(status){
     let isSavedKeyRange = IDBKeyRange.only(status);
-    console.log(isSavedKeyRange);
 
     let transaction = db.transaction(["dogo"]);
     let objectStore = transaction.objectStore("dogo");
     let index = objectStore.index("isSaved");
    
     index.openCursor(isSavedKeyRange).onsuccess = event => {
-        console.log(event);
         let cursor = event.target.result;
         if (cursor) {
             console.log(cursor.value.url);
@@ -53,37 +51,27 @@ function readDogo(status){
 }
 
 
-function deleteDogo(){
-    /* COPY DOC
-    let request = db.transaction(["dogo"], "readwrite")
-                .objectStore("dogo")
-                .delete("444-44-4444");
-    request.onsuccess = event => {
-    // c'est supprimé !
-    };
+function deleteDogo(url){
+    let transaction = db.transaction(["dogo"], "readwrite");
+    let objectStore = transaction.objectStore("dogo");
+    let request = objectStore.delete(url);
 
+    request.onsuccess = event => {console.log('Succes lors d\'une requete DELETE');};
     request.onerror = event => {console.log('Erreur lors d\'une requete DELETE');};
-    */
 }
 
 function updateDogo(url, value){
     let transaction = db.transaction(["dogo"], "readwrite")
     let objectStore = transaction.objectStore("dogo");
-    console.log(url);
     let request = objectStore.get(url);
 
     request.onerror = event => {console.log('Erreur lors d\'une requete update');};
     request.onsuccess = event => {
-        // On récupère l'ancienne valeur que nous souhaitons mettre à jour
-        console.log(request);
-        var data = request.result;
-
-        // On met à jour ce(s) valeur(s) dans l'objet
-        console.log(data);
+        let data = request.result;
         data.isSaved = value;
 
-        // Et on remet cet objet à jour dans la base
-        var requestUpdate = objectStore.put(data);
+        let requestUpdate = objectStore.put(data);
+        
         requestUpdate.onerror = event => {console.log('Erreur lors de la màj de la ligne');};
         requestUpdate.onsuccess = event => {console.log('Ligne màj');};
     };
