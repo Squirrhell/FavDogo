@@ -2,7 +2,6 @@
 var db;
 const request = indexedDB.open("DogoDB", 3);
 request.onerror = event => {console.log('Erreur au chargement de la BDD')};
-request.onsuccess = event => {db = event.target.result;console.log('Succes du chargement de la BDD')};
 request.onupgradeneeded = event => {
     db = event.target.result;
 
@@ -13,6 +12,8 @@ request.onupgradeneeded = event => {
     objectStore.transaction.onerror = event => {console.log("Erreur : la màj de la BDD a échoué");};
 
 };
+request.onsuccess = event => {db = event.target.result;console.log('Succes du chargement de la BDD');startRouter();};
+
 
 //db.onerror = event => {console.log('Erreur lors d\'une requete :' + event.target.errorCode);};
 

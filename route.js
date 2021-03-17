@@ -1,3 +1,10 @@
+function startRouter(){
+    let hash = window.location.hash;
+    if(hash != "#home" && hash != "#favorite" && hash != "#deleted"){
+        history.pushState(null, null, "#home");
+    }
+    hashChangedRoute();
+};
 
 function home(view){
     let div = document.createElement('div');
@@ -59,10 +66,4 @@ function hashChangedRoute() {
 }  
 
 window.addEventListener("hashchange", hashChangedRoute);
-window.onload = event => {
-    let hash = window.location.hash;
-    if(hash != "#home" && hash != "#favorite" && hash != "#deleted"){
-        history.pushState(null, null, "#home");
-    }
-    hashChangedRoute();
-};
+

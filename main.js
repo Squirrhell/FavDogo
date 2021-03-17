@@ -1,7 +1,9 @@
 
-function Chien(url, isSaved){
+class Chien {
+    constructor(url, isSaved){
     this.url = url;
     this.isSaved = isSaved;
+    };
 }
 
 
