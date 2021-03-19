@@ -1,0 +1,1 @@
+Pour pouvoir utiliser ce site il vous suffira de le lancer sur un explorateur chromium qui permettra ainsi toute les fonctionnalités du site.
