@@ -12,7 +12,11 @@ request.onupgradeneeded = event => {
     objectStore.transaction.onerror = event => {console.log("Erreur : la màj de la BDD a échoué");};
 
 };
-request.onsuccess = event => {db = event.target.result;console.log('Succes du chargement de la BDD');router.startRouter();};
+request.onsuccess = event => {
+    db = event.target.result;
+    console.log('Succes du chargement de la BDD');
+    router.startRouter();
+};
 
 
 //db.onerror = event => {console.log('Erreur lors d\'une requete :' + event.target.errorCode);};
